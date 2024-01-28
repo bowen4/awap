@@ -13,7 +13,9 @@ def dist2(x1, y1, x2, y2):
 class BotPlayer(Player):
     def __init__(self, map: Map):
         super().__init__(map)
+        self.offense = False
         self.bomber_pq = []
+        self.other_pq = []
         self.bomber_score = Counter()
         # find bomber tiles
         for x in range(map.width):
@@ -25,13 +27,21 @@ class BotPlayer(Player):
                         self.bomber_score[(x, y)] += 1
         for ((x, y), score) in self.bomber_score.most_common():
             heapq.heappush(self.bomber_pq, (-score, x, y))
+            heapq.heappush(self.other_pq, (score, x, y))
 
     def play_turn(self, rc: RobotController):
         us = rc.get_ally_team()
         cash = rc.get_balance(us)
-        while cash >= 1750 and self.bomber_pq:
+        while cash >= 1750 and self.bomber_pq and not self.offense:
+            if self.bomber_pq[0][0] >= -10:
+                self.offense = True
             (s, x, y) = heapq.heappop(self.bomber_pq)
             rc.build_tower(TowerType.BOMBER, x, y)
+            cash -= 1750
+        if self.offense:
+            while cash >= 53:
+                rc.send_debris(1, 25)
+                cash -= 53
         towers = rc.get_towers(us)
         for tower in towers:
             if rc.can_bomb(tower.id):

@@ -102,7 +102,7 @@ def set_turn(turn):
 
 import time
 for turn in replay['turns']:
-    #time.sleep(0.3)
+    #time.sleep(0.05)
     set_turn(turn)
     if WEB_MODE:
         pass

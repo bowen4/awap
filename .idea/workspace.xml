@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e3dd08e-a936-48d2-9b49-f4f24c662e50" name="Changes" comment="Changed readme">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bots/encik.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bots/xavier.py" beforeDir="false" afterPath="$PROJECT_DIR$/bots/xavier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bots/bowen_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bots/bowen_bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/replay_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/replay_game.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,13 +60,13 @@
   <component name="RunManager" selected="Python.python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz">
     <configuration name="Compete" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -91,13 +93,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py replays/xavier-bowen_bot-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -114,13 +116,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py replays/xavier-xavier-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -137,13 +139,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py xavier-xavier-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -160,13 +162,13 @@
     </configuration>
     <configuration name="python replay_game.py replays/[xavier-xavier-biki_bott.awap24r.gz](replays%2Fxavier-xavier-biki_bott.awap24r.gz)" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -183,13 +185,13 @@
     </configuration>
     <configuration name="python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
