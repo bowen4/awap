@@ -15,6 +15,18 @@ class BotPlayer(Player):
         self.build_towers(rc)
         self.towers_attack(rc)
     
+    def scheduled_observer(self, turn, rc: RobotController):
+        upper = turn + 100
+        totHP = 0
+        k = 0
+        for i in range(turn, upper):
+            if get_debris_schedule(i) != None:
+                x, y = get_debris_schedule(i)
+                totHP += y
+                k += 1
+        if k != 0: return totHP/ k
+        else: return 0
+
     def xDamage(self, team, rc: RobotController):
         towers = rc.get_towers(team)
         xD = 0
@@ -40,7 +52,7 @@ class BotPlayer(Player):
                 if i.health != 0:
                     totalHP += i.health
                     k += 1
-            return totalHP / k
+            return totalHP / (10*k)
         else: return 0
 
     def build_towers(self, rc: RobotController):
@@ -48,23 +60,38 @@ class BotPlayer(Player):
         them = rc.get_enemy_team()
         r = self.xDamage(us, rc)
         f = self.enemyHP(us, rc)
-        print(r, f)
+        #print(r, f)
+        future = self.scheduled_observer(rc.get_turn(), rc)
+        prob_sniper = min(future, 100) / 100
+        print(r, f, prob_sniper)
         x = random.randint(0, self.map.height-1)
         y = random.randint(0, self.map.height-1)
-        tower = random.randint(1, 2) # randomly select a tower
-        if (rc.can_build_tower(TowerType.GUNSHIP, x, y) and 
-            rc.can_build_tower(TowerType.BOMBER, x, y) and
-            rc.can_build_tower(TowerType.SOLAR_FARM, x, y) and
-            rc.can_build_tower(TowerType.REINFORCER, x, y)
-        ) and (r < f):
-            if tower == 1:
-                rc.build_tower(TowerType.BOMBER, x, y)
-            elif tower == 2:
-                rc.build_tower(TowerType.GUNSHIP, x, y)
-            elif tower == 3:
-                rc.build_tower(TowerType.SOLAR_FARM, x, y)
-            elif tower == 4:
-                rc.build_tower(TowerType.REINFORCER, x, y)
+        val = random.randrange(0, 1) # randomly select a tower
+        if r < f:
+            if val < prob_sniper: tower = 1
+            else: tower = 2
+            if (rc.can_build_tower(TowerType.GUNSHIP, x, y) and 
+                rc.can_build_tower(TowerType.BOMBER, x, y) and
+                rc.can_build_tower(TowerType.SOLAR_FARM, x, y) and
+                rc.can_build_tower(TowerType.REINFORCER, x, y)
+            ) and (r < f):
+                if tower == 1:
+                    rc.build_tower(TowerType.BOMBER, x, y)
+                elif tower == 2:
+                    rc.build_tower(TowerType.GUNSHIP, x, y)
+        elif r >= f:
+            if val < prob_sniper: tower = 3
+            else: tower = 4
+            if (rc.can_build_tower(TowerType.GUNSHIP, x, y) and 
+                rc.can_build_tower(TowerType.BOMBER, x, y) and
+                rc.can_build_tower(TowerType.SOLAR_FARM, x, y) and
+                rc.can_build_tower(TowerType.REINFORCER, x, y)
+            ) and (r < f):
+                if tower == 3:
+                    rc.build_tower(TowerType.SOLAR_FARM, x, y)
+                elif tower == 4:
+                    rc.build_tower(TowerType.REINFORCER, x, y)
+        
     
     def towers_attack(self, rc: RobotController):
         towers = rc.get_towers(rc.get_ally_team())
