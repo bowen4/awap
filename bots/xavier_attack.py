@@ -18,6 +18,7 @@ class BotPlayer(Player):
         self.map = mp
         self.launch = 0
         self.towers = [0, 0, 0, 0]
+        self.min_towers_in_reinforce = 15
 
     @staticmethod
     def in_range(tower, tower_coords, target_coords):
@@ -40,8 +41,25 @@ class BotPlayer(Player):
                 num += 1
         return num
 
+    def get_reinforcer_in_range(self, rc, tower_type=SOLAR_FARM):
+        for cand_tower in rc.get_towers(rc.get_ally_team()):
+            if cand_tower.type == tower_type:
+                towers_in_range = rc.sense_towers_within_radius_squared(rc.get_ally_team(), cand_tower.x,
+                                                                        cand_tower.y, REINFORCER.range)
+                towers_in_range = list(filter(lambda t: t.type == tower_type, towers_in_range))
+                index = TOWERS.index(tower_type)
+                if len(towers_in_range) > self.min_towers_in_reinforce:
+                    best_coords = (cand_tower.x, cand_tower.y)
+                    return best_coords[0], best_coords[1], cand_tower
+        return None
+
     def get_optimal(self, tower, rc: RobotController):
         best_coords = (0, 0)
+
+        if tower != REINFORCER:
+            results = self.get_reinforcer_in_range(rc, tower)
+            if results:
+                return results[0], results[1], results[2]
 
         if tower == GUNSHIP or tower == BOMBER:
             best_num = -1
@@ -55,15 +73,6 @@ class BotPlayer(Player):
                         best_coords = (x, y)
 
         elif tower == SOLAR_FARM:
-            for cand_tower in rc.get_towers(rc.get_ally_team()):
-                if cand_tower.type == SOLAR_FARM:
-                    towers_in_range = rc.sense_towers_within_radius_squared(rc.get_ally_team(), cand_tower.x,
-                                                                            cand_tower.y, REINFORCER.range)
-                    towers_in_range = list(filter(lambda t: t.type == SOLAR_FARM, towers_in_range))
-                    if len(towers_in_range) > 15:
-                        best_coords = (cand_tower.x, cand_tower.y)
-                        return best_coords[0], best_coords[1], cand_tower
-
             best_num = 10000000
             for x in range(self.map.width):
                 for y in range(self.map.height):
@@ -91,7 +100,8 @@ class BotPlayer(Player):
     def play_turn(self, rc: RobotController):
         self.build_towers(rc)
         self.towers_attack(rc)
-        self.attack(rc)
+        self.replace_farm(rc)
+        # self.attack(rc)
 
     def build_optimal_tower(self, tower, rc):
         x, y, cand_tower = self.get_optimal(tower, rc)
@@ -99,6 +109,8 @@ class BotPlayer(Player):
             rc.build_tower(tower, x, y)
         elif cand_tower and rc.get_balance(rc.get_ally_team()) > REINFORCER.cost:
             rc.sell_tower(cand_tower.id)
+            index = TOWERS.index(tower)
+            self.towers[index] -= 1
             rc.build_tower(REINFORCER, x, y)
 
     @staticmethod
@@ -150,6 +162,31 @@ class BotPlayer(Player):
             if tower.type == SOLAR_FARM:
                 count += 1
         return count
+
+    def replace_farm(self, rc: RobotController):
+        num_spaces = self.map.height * self.map.width - len(self.map.path) - len(rc.get_towers(rc.get_ally_team()))
+
+        if num_spaces > 0:
+            return
+
+        best_coords = (0, 0)
+        candidate = None
+        best_num = -1
+        build_tower = GUNSHIP
+
+        for tower in rc.get_towers(rc.get_ally_team()):
+            if tower.type == SOLAR_FARM:
+                num = self.get_num_paths_in_range(build_tower, (tower.x, tower.y))
+                if num >= best_num:
+                    best_num = num
+                    candidate = tower
+                    best_coords = (tower.x, tower.y)
+
+        if candidate and rc.get_balance(rc.get_ally_team()) > build_tower.cost:
+            rc.sell_tower(candidate.id)
+            rc.build_tower(build_tower, *best_coords)
+
+        return best_coords[0], best_coords[1]
 
     def attack(self, rc: RobotController):
         num_spaces = self.map.height * self.map.width - len(self.map.path) - len(rc.get_towers(rc.get_ally_team()))
