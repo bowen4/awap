@@ -8,6 +8,8 @@ from src.tower import Tower
 
 from collections import Counter
 
+import numpy as np
+
 def dist2(x1, y1, x2, y2):
     return (x1 - x2) ** 2 + (y1 - y2) ** 2
 
@@ -19,6 +21,7 @@ class BotPlayer(Player):
         self.bb_poss = set()
         self.gs_poss = set()
         self.sf_poss = set()
+        self.enemyTowerCount = []
         for (x, y) in map.path:
             if map.is_space(x + 1, y):
                 self.bb_poss.add((x + 1, y))
@@ -122,6 +125,21 @@ class BotPlayer(Player):
             return totalHP / k
         else: return 0
 
+    def enemyTower(self, team, rc:RobotController):
+        enemyTowers = rc.get_towers(team)
+        self.enemyTowerCount.append(len(enemyTowers))
+        if len(self.enemyTowerCount) > 40:
+            self.enemyTowerCount.pop(0)
+        return np.gradient(np.array(self.enemyTowerCount, dtype=float)).tolist()
+
+    def counter(self, rc: RobotController):
+        them = rc.get_enemy_team()
+        gradients = self.enemyTower(them)
+        for i in range(30, 40):
+            if gradients[i] < 0:
+                EXPECTED_DAMAGE -= 1
+                PROBABILITY_SNIPER -= 0.01
+
     def build_towers(self, rc: RobotController):
         us = rc.get_ally_team()
         them = rc.get_enemy_team()
@@ -133,7 +151,7 @@ class BotPlayer(Player):
         print(r, f, prob_sniper)
         #print(self.bb_poss)
         val = random.randrange(0, 1) # randomly select a tower
-        if r < f + abs(r-f)/2:
+        if r - 35< f:
             if val < prob_sniper:
                 (x, y) = self.gs_poss[-1]
                 if rc.can_build_tower(TowerType.GUNSHIP, x, y):
@@ -144,7 +162,7 @@ class BotPlayer(Player):
                 if rc.can_build_tower(TowerType.BOMBER, x, y):
                     self.bb_poss.pop()
                     rc.build_tower(TowerType.BOMBER, x, y)  
-        elif r >= f + abs(r-f)/2:
+        elif r -35>= f:
             if val < prob_sniper:
                 (x, y) = self.sf_poss[-1]
                 if rc.can_build_tower(TowerType.SOLAR_FARM, x, y):
