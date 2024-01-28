@@ -37,8 +37,11 @@ class BotPlayer(Player):
         if rc.get_time_remaining_at_start_of_turn(rc.get_ally_team()) < TIME_BUFFER:
             return
 
-        if not self.late_game:
-            self.build_towers(rc)
+        try:
+            if not self.late_game:
+                self.build_towers(rc)
+        except:
+            pass
         self.towers_attack(rc)
         self.replace_farm(rc)  # late game
         if self.late_game:
@@ -86,16 +89,18 @@ class BotPlayer(Player):
                 return results[0], results[1], results[2]
 
         if tower == GUNSHIP:
-            x, y = self.gun_coords.pop()
-            while not rc.can_build_tower(tower, x, y):
+            if len(self.gun_coords) > 0:
                 x, y = self.gun_coords.pop()
-            best_coords = (x, y)
+                while not rc.can_build_tower(tower, x, y):
+                    x, y = self.gun_coords.pop()
+                best_coords = (x, y)
 
         elif tower == BOMBER:
-            x, y = self.bomb_coords.pop()
-            while not rc.can_build_tower(tower, x, y):
+            if len(self.bomb_coords) > 0:
                 x, y = self.bomb_coords.pop()
-            best_coords = (x, y)
+                while not rc.can_build_tower(tower, x, y):
+                    x, y = self.bomb_coords.pop()
+                best_coords = (x, y)
 
         # elif tower == BOMBER:
         #     best_num = -1
@@ -197,12 +202,7 @@ class BotPlayer(Player):
 
     def replace_farm(self, rc: RobotController):
         build_tower = GUNSHIP
-        if rc.get_balance(rc.get_ally_team()) < build_tower.cost:
-            return
-
-        num_spaces = self.map.height * self.map.width - len(self.map.path) - len(rc.get_towers(rc.get_ally_team()))
-
-        if num_spaces > 0:
+        if rc.get_balance(rc.get_ally_team()) < build_tower.cost or len(self.gun_coords) > 0:
             return
 
         best_coords = (0, 0)
@@ -214,8 +214,8 @@ class BotPlayer(Player):
                 num = self.get_num_paths_in_range(build_tower, (tower.x, tower.y))
                 if num >= best_num:
                     best_num = num
-                    candidate = tower
-                    best_coords = (tower.x, tower.y)
+                candidate = tower
+                best_coords = (tower.x, tower.y)
 
         if candidate and rc.get_balance(rc.get_ally_team()) > build_tower.cost:
             rc.sell_tower(candidate.id)
