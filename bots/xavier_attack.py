@@ -9,6 +9,7 @@ REINFORCER = TowerType.REINFORCER
 SOLAR_FARM = TowerType.SOLAR_FARM
 TOWERS = [GUNSHIP, BOMBER, SOLAR_FARM, REINFORCER]
 OFFENSE_SIZE = 20
+TIME_BUFFER = 3  # in seconds
 
 
 class BotPlayer(Player):
@@ -21,11 +22,25 @@ class BotPlayer(Player):
         self.late_game = False
         self.next = None
 
+        self.gun_coords = []
+        self.bomb_coords = []
+        self.solar_coords = []
+        for x in range(self.map.width):
+            for y in range(self.map.height):
+                if mp.is_space(x, y):
+                    self.gun_coords.append((x, y))
+                    self.bomb_coords.append((x, y))
+        self.gun_coords.sort(key=lambda c: self.get_num_paths_in_range(GUNSHIP, c))
+        self.bomb_coords.sort(key=lambda c: self.get_num_paths_in_range(BOMBER, c))
+
     def play_turn(self, rc: RobotController):
+        if rc.get_time_remaining_at_start_of_turn(rc.get_ally_team()) < TIME_BUFFER:
+            return
+
         if not self.late_game:
             self.build_towers(rc)
         self.towers_attack(rc)
-        self.replace_farm(rc)
+        self.replace_farm(rc)  # late game
         if self.late_game:
             self.attack(rc)
 
@@ -70,16 +85,28 @@ class BotPlayer(Player):
             if results:
                 return results[0], results[1], results[2]
 
-        if tower == GUNSHIP or tower == BOMBER:
-            best_num = -1
-            for x in range(self.map.width):
-                for y in range(self.map.height):
-                    if not rc.can_build_tower(tower, x, y):
-                        continue
-                    num = self.get_num_paths_in_range(tower, (x, y))
-                    if num >= best_num:
-                        best_num = num
-                        best_coords = (x, y)
+        if tower == GUNSHIP:
+            x, y = self.gun_coords.pop()
+            while not rc.can_build_tower(tower, x, y):
+                x, y = self.gun_coords.pop()
+            best_coords = (x, y)
+
+        elif tower == BOMBER:
+            x, y = self.bomb_coords.pop()
+            while not rc.can_build_tower(tower, x, y):
+                x, y = self.bomb_coords.pop()
+            best_coords = (x, y)
+
+        # elif tower == BOMBER:
+        #     best_num = -1
+        #     for x in range(self.map.width):
+        #         for y in range(self.map.height):
+        #             if not rc.can_build_tower(tower, x, y):
+        #                 continue
+        #             num = self.get_num_paths_in_range(tower, (x, y))
+        #             if num >= best_num:
+        #                 best_num = num
+        #                 best_coords = (x, y)
 
         elif tower == SOLAR_FARM:
             best_num = 10000000
@@ -169,6 +196,10 @@ class BotPlayer(Player):
         return count
 
     def replace_farm(self, rc: RobotController):
+        build_tower = GUNSHIP
+        if rc.get_balance(rc.get_ally_team()) < build_tower.cost:
+            return
+
         num_spaces = self.map.height * self.map.width - len(self.map.path) - len(rc.get_towers(rc.get_ally_team()))
 
         if num_spaces > 0:
@@ -177,7 +208,6 @@ class BotPlayer(Player):
         best_coords = (0, 0)
         candidate = None
         best_num = -1
-        build_tower = GUNSHIP
 
         for tower in rc.get_towers(rc.get_ally_team()):
             if tower.type == SOLAR_FARM:
