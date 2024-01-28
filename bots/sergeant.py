@@ -101,6 +101,9 @@ class BotPlayer(Player):
                 else:
                     break
             elif 1 <= self.next_action <= 2:
+                if not self.gs_poss:
+                    self.next_action += 1
+                    continue
                 (x, y) = self.gs_poss[-1] if self.gs_poss else (0, 0)
                 if rc.can_build_tower(TowerType.GUNSHIP, x, y):
                     self.next_action += 1
@@ -109,6 +112,9 @@ class BotPlayer(Player):
                 else:
                     break
             elif self.next_action >= 3:
+                if not self.sf_poss:
+                    self.next_action = (self.next_action + 1) % 5
+                    continue
                 (x, y) = self.sf_poss[-1] if self.sf_poss else (0, 0)
                 if rc.can_build_tower(TowerType.SOLAR_FARM, x, y):
                     self.next_action = (self.next_action + 1) % 5
@@ -140,14 +146,28 @@ class BotPlayer(Player):
             else:
                 our_balance += TowerType.REINFORCER.cost*0.8
         
-        opp_defense, opp_bb, opp_gs = self.check_opp_def(rc)
+        #opp_defense, opp_bb, opp_gs = self.check_opp_def(rc)
         #print(f'opp defense{opp_defense}')
         # opp_bb*TowerType.BOMBER.damage 
-        debrisSchedule = get_debris_schedule(rc.get_turn())
-        if debrisSchedule != None:
-            naturalDebrisCooldown, naturalDebrisHealth = debrisSchedule
-            opp_defense-=naturalDebrisHealth/naturalDebrisCooldown
+        #debrisSchedule = get_debris_schedule(rc.get_turn())
+        #if debrisSchedule != None:
+        #    naturalDebrisCooldown, naturalDebrisHealth = debrisSchedule
+        #    opp_defense-=naturalDebrisHealth/naturalDebrisCooldown
 
+        attack_duration = 40
+        cost_per_debris = our_balance // attack_duration
+        use_health = 0
+        for health, cost in DEBRIS_DICT.items():
+            if cost > cost_per_debris:
+                break
+            use_health = health
+        expected_damage = 20 * use_health
+        if self.estimate_damage(rc, use_health, 40) >= 2500:
+            self.isRush = True
+            self.rushDebrisCost = DEBRIS_DICT[use_health]
+            self.rushDebrisHealth = use_health
+            print("RUSHHHHHHH")
+        return
         #calculate our attack capability based on opp_bb and opp_gs
         map_length = self.check_map_length(rc)
         expected_damage_per_debris = int(map_length*opp_defense*scale) #buffer
@@ -158,7 +178,7 @@ class BotPlayer(Player):
             while expected_damage_per_debris not in DEBRIS_DICT:
                 expected_damage_per_debris += 1
             health_debris = expected_damage_per_debris
-        # health_debris *= 2 #experiment
+        health_debris *= 2 #experiment
         # health_debris = 500 #experiment
         num_debris = 2500 // health_debris
         #print(f'debris{health_debris}')
@@ -175,6 +195,13 @@ class BotPlayer(Player):
         us = rc.get_ally_team()
         towers = rc.get_towers(us)
         our_balance = rc.get_balance(us)
+        towers = rc.get_towers(us)
+        while rc.get_balance(us) < debrisCost and towers:
+            back = towers.pop()
+            rc.sell_tower(back.id)
+        if rc.can_send_debris(1, debrisHealth):
+            rc.send_debris(1, debrisHealth)
+        return
         if debrisCost>our_balance:
             shortage = debrisCost - our_balance
             numSolarNeeded = shortage // TowerType.SOLAR_FARM.cost + 1
@@ -240,9 +267,11 @@ class BotPlayer(Player):
 
     #determine opponent defense capability
     #returns (estimated_defense, number of bombers, number of gunships)
-    def check_opp_def(self, rc: RobotController):
+    def estimate_damage(self, rc: RobotController, debrisHealth, numDebris):
         them = rc.get_enemy_team()
         towers = rc.get_towers(them)
+        plength = self.check_map_length(rc)
+
         defense = 0
         opp_bb = 0
         opp_gs = 0
@@ -256,7 +285,14 @@ class BotPlayer(Player):
             elif tower.type == TowerType.GUNSHIP:
                 defense += TowerType.GUNSHIP.damage/TowerType.GUNSHIP.cooldown
                 opp_gs += 1
-        
+
+        eff_health = debrisHealth - opp_bb * 6.0
+        if eff_health <= 0:
+            return 0
+        eff_num = ((eff_health * numDebris) - (opp_gs * 25.0 * plength / 20.0)) / eff_health
+        eff_damage = eff_num * debrisHealth
+        print(eff_damage)
+        return eff_damage
         #calculates the defense capability based on balance
         #opp_balance = rc.get_balance(them)
         #potential_defense = opp_balance/((TowerType.BOMBER.cost + TowerType.GUNSHIP.cost)/2) * (TowerType.BOMBER.damage/TowerType.BOMBER.cooldown + TowerType.GUNSHIP/TowerType.Gunship.cooldown)/2
