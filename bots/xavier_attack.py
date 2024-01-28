@@ -9,7 +9,6 @@ REINFORCER = TowerType.REINFORCER
 SOLAR_FARM = TowerType.SOLAR_FARM
 TOWERS = [GUNSHIP, BOMBER, SOLAR_FARM, REINFORCER]
 OFFENSE_SIZE = 20
-SELL = False
 
 
 class BotPlayer(Player):
@@ -19,6 +18,8 @@ class BotPlayer(Player):
         self.launch = 0
         self.towers = [0, 0, 0, 0]
         self.min_towers_in_reinforce = 15
+        self.late_game = False
+        self.next = None
 
     @staticmethod
     def in_range(tower, tower_coords, target_coords):
@@ -101,7 +102,8 @@ class BotPlayer(Player):
         self.build_towers(rc)
         self.towers_attack(rc)
         self.replace_farm(rc)
-        # self.attack(rc)
+        if self.late_game:
+            self.attack(rc)
 
     def build_optimal_tower(self, tower, rc):
         x, y, cand_tower = self.get_optimal(tower, rc)
@@ -186,24 +188,20 @@ class BotPlayer(Player):
             rc.sell_tower(candidate.id)
             rc.build_tower(build_tower, *best_coords)
 
-        return best_coords[0], best_coords[1]
+        if candidate is None:
+            self.late_game = True
+            print("LATE GAME?")
 
     def attack(self, rc: RobotController):
         num_spaces = self.map.height * self.map.width - len(self.map.path) - len(rc.get_towers(rc.get_ally_team()))
 
         debris = (7, 1000)
-        farm_count = self.get_farm_count(rc)
 
-        if SELL:
-            balance = rc.get_balance(rc.get_ally_team()) + farm_count * SOLAR_FARM.cost * 0.8
-        else:
-            balance = rc.get_balance(rc.get_ally_team())
+        balance = rc.get_balance(rc.get_ally_team())
 
         offense_cost = OFFENSE_SIZE * rc.get_debris_cost(*debris)
 
         if balance > offense_cost and num_spaces == 0:
-            if SELL:
-                self.sell_farm(rc, num=farm_count)
             self.launch = OFFENSE_SIZE
 
         if self.launch > 0:
