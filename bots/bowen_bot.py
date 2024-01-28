@@ -33,7 +33,7 @@ class BotPlayer(Player):
         us = rc.get_ally_team()
         cash = rc.get_balance(us)
         while cash >= 1750 and self.bomber_pq and not self.offense:
-            if self.bomber_pq[0][0] >= -10:
+            if self.bomber_pq[0][0] >= -2:
                 self.offense = True
             (s, x, y) = heapq.heappop(self.bomber_pq)
             rc.build_tower(TowerType.BOMBER, x, y)

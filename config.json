@@ -1,4 +1,4 @@
 {
     "bots": ["bots/encik.py", "bots/encik.py"],
-    "map": "maps/simple_map1.awap24m"
+    "map": "maps/biki_bott.awap24m"
 }
