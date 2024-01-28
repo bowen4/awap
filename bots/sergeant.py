@@ -162,7 +162,7 @@ class BotPlayer(Player):
                 break
             use_health = health
         expected_damage = 20 * use_health
-        if self.estimate_damage(rc, use_health, 40) >= 2500:
+        if self.estimate_damage(rc, use_health, 40) >= 3000:
             self.isRush = True
             self.rushDebrisCost = DEBRIS_DICT[use_health]
             self.rushDebrisHealth = use_health
@@ -276,6 +276,39 @@ class BotPlayer(Player):
         opp_bb = 0
         opp_gs = 0
         scale = 1.5
+
+        bb_power = Counter()
+        gs_min = {}
+        gs_max = {}
+        for tower in towers:
+            if tower.type == TowerType.GUNSHIP:
+                gs_min[tower.id] = -1
+                gs_max[tower.id] = -1
+
+        path = rc.get_map().path
+        for i in range(len(path)):
+            x, y = path[i]
+            for tower in towers:
+                if tower.type == TowerType.BOMBER and dist2(x, y, tower.x, tower.y) <= 10:
+                    bb_power[tower.id] += 1
+                elif tower.type == TowerType.GUNSHIP and dist2(x, y, tower.x, tower.y) <= 60:
+                    if gs_min[tower.id] == -1:
+                        gs_min[tower.id] = i
+                    gs_max[tower.id] = i
+        eff_bb = 0.0
+        eff_gs = 0.0
+        for tower in towers:
+            if tower.type == TowerType.BOMBER:
+                eff_bb += 6.0 * bb_power[tower.id] / 15.0
+            elif tower.type == TowerType.GUNSHIP:
+                eff_gs += 25.0 * (gs_max[tower.id] - gs_min[tower.id]) / 20.0
+        #print(eff_bb)
+        eff_health = debrisHealth - eff_bb
+        if eff_health <= 0:
+            return 0
+        eff_num = (eff_health * numDebris - eff_gs) / eff_health
+        return eff_num * debrisHealth
+
 
         #calculates the defense capability based on current towers (DPS)
         for tower in towers:
