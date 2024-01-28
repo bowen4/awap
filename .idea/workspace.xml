@@ -56,13 +56,13 @@
   <component name="RunManager" selected="Python.python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render">
     <configuration name="Compete" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -89,13 +89,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py replays/xavier-bowen_bot-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -112,13 +112,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py replays/xavier-xavier-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -135,13 +135,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py xavier-xavier-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -158,13 +158,13 @@
     </configuration>
     <configuration name="python replay_game.py replays/[xavier-xavier-biki_bott.awap24r.gz](replays%2Fxavier-xavier-biki_bott.awap24r.gz)" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -181,13 +181,13 @@
     </configuration>
     <configuration name="python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -204,13 +204,13 @@
     </configuration>
     <configuration name="python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -226,12 +226,12 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render" />
       <item itemvalue="Python.python replay_game.py replays/[xavier-xavier-biki_bott.awap24r.gz](replays%2Fxavier-xavier-biki_bott.awap24r.gz)" />
       <item itemvalue="Python.python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz" />
       <item itemvalue="Python.python replay_game_cli.py replays/xavier-bowen_bot-biki_bott.awap24r" />
       <item itemvalue="Python.python replay_game_cli.py replays/xavier-xavier-biki_bott.awap24r" />
       <item itemvalue="Python.python replay_game_cli.py xavier-xavier-biki_bott.awap24r" />
-      <item itemvalue="Python.python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render" />
       <item itemvalue="Python.Compete" />
     </list>
   </component>
