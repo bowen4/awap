@@ -9,6 +9,7 @@ REINFORCER = TowerType.REINFORCER
 SOLAR_FARM = TowerType.SOLAR_FARM
 TOWERS = [GUNSHIP, BOMBER, SOLAR_FARM, REINFORCER]
 OFFENSE_SIZE = 20
+SELL = False
 
 
 class BotPlayer(Player):
@@ -16,6 +17,7 @@ class BotPlayer(Player):
         super().__init__(mp)
         self.map = mp
         self.launch = 0
+        self.towers = [0, 0, 0, 0]
 
     @staticmethod
     def in_range(tower, tower_coords, target_coords):
@@ -53,6 +55,15 @@ class BotPlayer(Player):
                         best_coords = (x, y)
 
         elif tower == SOLAR_FARM:
+            for cand_tower in rc.get_towers(rc.get_ally_team()):
+                if cand_tower.type == SOLAR_FARM:
+                    towers_in_range = rc.sense_towers_within_radius_squared(rc.get_ally_team(), cand_tower.x,
+                                                                            cand_tower.y, REINFORCER.range)
+                    towers_in_range = list(filter(lambda t: t.type == SOLAR_FARM, towers_in_range))
+                    if len(towers_in_range) > 15:
+                        best_coords = (cand_tower.x, cand_tower.y)
+                        return best_coords[0], best_coords[1], cand_tower
+
             best_num = 10000000
             for x in range(self.map.width):
                 for y in range(self.map.height):
@@ -75,7 +86,7 @@ class BotPlayer(Player):
                         best_num = num
                         best_coords = (x, y)
 
-        return best_coords[0], best_coords[1]
+        return best_coords[0], best_coords[1], None
 
     def play_turn(self, rc: RobotController):
         self.build_towers(rc)
@@ -83,9 +94,12 @@ class BotPlayer(Player):
         self.attack(rc)
 
     def build_optimal_tower(self, tower, rc):
-        x, y = self.get_optimal(tower, rc)
+        x, y, cand_tower = self.get_optimal(tower, rc)
         if rc.can_build_tower(tower, x, y):
             rc.build_tower(tower, x, y)
+        elif cand_tower and rc.get_balance(rc.get_ally_team()) > REINFORCER.cost:
+            rc.sell_tower(cand_tower.id)
+            rc.build_tower(REINFORCER, x, y)
 
     @staticmethod
     def get_parity(rc: RobotController, mod):
@@ -96,8 +110,10 @@ class BotPlayer(Player):
         if rc.get_turn() < 2000:
             # order = [1, 0, 2, 1, 0, 2, 1, 0, 2]
             order = [1, 0, 2] * 2 + [3] + [1, 0, 2] * 3
+            order = [1, 2] + [0, 2] + [1, 2] + [0, 2] + [3] + [0, 2] + [1, 2] + [0, 2]
             parity = self.get_parity(rc, len(order))
             tower = TOWERS[order[parity]]
+            self.towers[order[parity]] += 1
             self.build_optimal_tower(tower, rc)
 
         # Mid Game
@@ -106,6 +122,7 @@ class BotPlayer(Player):
             order = [0, 2] * 3 + [3] + [0, 2] * 4
             parity = self.get_parity(rc, len(order))
             tower = TOWERS[order[parity]]
+            self.towers[order[parity]] += 1
             self.build_optimal_tower(tower, rc)
 
     @staticmethod
@@ -139,11 +156,17 @@ class BotPlayer(Player):
 
         debris = (7, 1000)
         farm_count = self.get_farm_count(rc)
-        balance = rc.get_balance(rc.get_ally_team()) + farm_count * SOLAR_FARM.cost * 0.8
+
+        if SELL:
+            balance = rc.get_balance(rc.get_ally_team()) + farm_count * SOLAR_FARM.cost * 0.8
+        else:
+            balance = rc.get_balance(rc.get_ally_team())
+
         offense_cost = OFFENSE_SIZE * rc.get_debris_cost(*debris)
 
         if balance > offense_cost and num_spaces == 0:
-            self.sell_farm(rc, num=farm_count)
+            if SELL:
+                self.sell_farm(rc, num=farm_count)
             self.launch = OFFENSE_SIZE
 
         if self.launch > 0:
