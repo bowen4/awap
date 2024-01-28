@@ -32,7 +32,7 @@ class BotPlayer(Player):
 
     def get_num_towers_in_range(self, tower, tower_coords, rc, towers=None):
         if towers is None:
-            towers = [GUNSHIP, BOMBER]
+            towers = [GUNSHIP, BOMBER, REINFORCER]
         num = 0
         for i in rc.get_towers(rc.get_ally_team()):
             if i.type in towers and self.in_range(tower, tower_coords, (i.x, i.y)):
@@ -59,7 +59,8 @@ class BotPlayer(Player):
                 for y in range(self.map.height):
                     if not rc.can_build_tower(tower, x, y):
                         continue
-                    num = self.get_num_paths_in_range(GUNSHIP, (x, y))
+                    num = self.get_num_paths_in_range(GUNSHIP, (x, y)) \
+                        - self.get_num_towers_in_range(REINFORCER, (x, y), rc, towers=[SOLAR_FARM])
                     if num < best_num:
                         best_num = num
                         best_coords = (x, y)
@@ -93,15 +94,17 @@ class BotPlayer(Player):
     def build_towers(self, rc: RobotController):
         # Early Game
         if rc.get_turn() < 2000:
-            parity = self.get_parity(rc, 9)
-            order = [1, 0, 2, 1, 0, 2, 1, 0, 3]
+            # order = [1, 0, 2, 1, 0, 2, 1, 0, 2]
+            order = [1, 0, 2, 1, 0, 2]
+            parity = self.get_parity(rc, len(order))
             tower = TOWERS[order[parity]]
             self.build_optimal_tower(tower, rc)
 
         # Mid Game
         else:
-            parity = self.get_parity(rc, 9)
-            order = [0, 0, 2, 0, 0, 2, 0, 0, 3]
+            # order = [0, 2]
+            order = [0, 0, 2]
+            parity = self.get_parity(rc, len(order))
             tower = TOWERS[order[parity]]
             self.build_optimal_tower(tower, rc)
 
