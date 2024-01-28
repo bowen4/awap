@@ -7,6 +7,7 @@
 
 To run the game engine, run the command:
 
+`python run_game.py -b bots/xavier.py -r bots/random_bot.py -m maps/biki_bott.awap24m --render`
 `python run_game.py -b blueBotFile -r redBotFile -m mapFile --render`
 
 ### Required arguments:
