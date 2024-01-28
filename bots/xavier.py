@@ -67,7 +67,7 @@ class BotPlayer(Player):
                 for y in range(self.map.height):
                     if not rc.can_build_tower(tower, x, y):
                         continue
-                    num = self.get_num_towers_in_range(GUNSHIP, (x, y), rc)
+                    num = self.get_num_towers_in_range(REINFORCER, (x, y), rc)
                     if num >= best_num:
                         best_num = num
                         best_coords = (x, y)

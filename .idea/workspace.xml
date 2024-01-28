@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e3dd08e-a936-48d2-9b49-f4f24c662e50" name="Changes" comment="Changed readme">
-      <change afterPath="$PROJECT_DIR$/bots/encik.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="6e3dd08e-a936-48d2-9b49-f4f24c662e50" name="Changes" comment="Added solar farm and reinforcement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bots/bowen_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bots/bowen_bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/replay_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/replay_game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bots/xavier.py" beforeDir="false" afterPath="$PROJECT_DIR$/bots/xavier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,16 +53,16 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz">
+  <component name="RunManager" selected="Python.python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render">
     <configuration name="Compete" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -93,13 +89,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py replays/xavier-bowen_bot-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -116,13 +112,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py replays/xavier-xavier-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -139,13 +135,13 @@
     </configuration>
     <configuration name="python replay_game_cli.py xavier-xavier-biki_bott.awap24r" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -162,13 +158,13 @@
     </configuration>
     <configuration name="python replay_game.py replays/[xavier-xavier-biki_bott.awap24r.gz](replays%2Fxavier-xavier-biki_bott.awap24r.gz)" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -185,13 +181,13 @@
     </configuration>
     <configuration name="python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz" type="PythonConfigurationType" factoryName="Python">
       <module name="awap" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -206,12 +202,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render" type="PythonConfigurationType" factoryName="Python">
+      <module name="awap" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.venv/awap-engine-2024-public/bin/python" />
+      <option name="SDK_NAME" value="Python 3.8 (awap-engine-2024-public) (2)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="run_game.py" />
+      <option name="PARAMETERS" value="-b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.python replay_game.py replays/[xavier-xavier-biki_bott.awap24r.gz](replays%2Fxavier-xavier-biki_bott.awap24r.gz)" />
       <item itemvalue="Python.python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz" />
       <item itemvalue="Python.python replay_game_cli.py replays/xavier-bowen_bot-biki_bott.awap24r" />
       <item itemvalue="Python.python replay_game_cli.py replays/xavier-xavier-biki_bott.awap24r" />
       <item itemvalue="Python.python replay_game_cli.py xavier-xavier-biki_bott.awap24r" />
+      <item itemvalue="Python.python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render" />
       <item itemvalue="Python.Compete" />
     </list>
   </component>
@@ -240,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706408409549</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added solar farm and reinforcement">
+      <created>1706415344124</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706415344124</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,11 +275,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changed readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed readme" />
+    <MESSAGE value="Added solar farm and reinforcement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added solar farm and reinforcement" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/awap$python_replay_game_cli_py_test_awap24r.coverage" NAME="python replay_game_cli.py test.awap24r Coverage Results" MODIFIED="1706408929435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/awap$python_run_game_py__b_bots_xavier_py__r_bots_bowen_bot_py__m_maps_biki_bott_awap24m___render.coverage" NAME="Compete Coverage Results" MODIFIED="1706410664929" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/awap$python_run_game_py__b_bots_xavier_py__r_bots_bowen_bot_py__m_maps_biki_bott_awap24m___render.coverage" NAME="python run_game.py -b bots/xavier.py -r bots/bowen_bot.py -m maps/biki_bott.awap24m --render Coverage Results" MODIFIED="1706416074854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/awap$python_replay_game_cli_py_replays_xavier_xavier_biki_bott_awap24r.coverage" NAME="python replay_game_cli.py replays/xavier-xavier-biki_bott.awap24r Coverage Results" MODIFIED="1706410751136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/awap$python_run_game_py__b_bots_xavier_py__r_bots_bowen_py__m_maps_biki_bott_awap24m___render.coverage" NAME="python run_game.py -b bots/xavier.py -r bots/bowen.py -m maps/biki_bott.awap24m --render Coverage Results" MODIFIED="1706408419148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/awap$python_replay_game_py_replays_xavier_bowen_bot_biki_bott_awap24r_gz.coverage" NAME="python replay_game.py replays/xavier-bowen_bot-biki_bott.awap24r.gz Coverage Results" MODIFIED="1706412766990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
