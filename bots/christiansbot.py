@@ -8,6 +8,7 @@ from src.tower import Tower
 
 from collections import Counter
 
+import copy
 import numpy as np
 
 def dist2(x1, y1, x2, y2):
@@ -163,7 +164,10 @@ class BotPlayer(Player):
                     self.bb_poss.pop()
                     rc.build_tower(TowerType.BOMBER, x, y)  
         elif r -35>= f:
-            if val < prob_sniper:
+            if val <= 1:
+                if self.sf_poss == None or len(self.sf_poss) == 0:
+                    self.sf_poss = copy.deepcopy(self.gs_poss)
+                    self.sf_poss.reverse()
                 (x, y) = self.sf_poss[-1]
                 if rc.can_build_tower(TowerType.SOLAR_FARM, x, y):
                     self.sf_poss.pop()
