@@ -90,6 +90,8 @@ def set_turn(turn):
     gs.current_bombs[Team.BLUE] = turn['blue_bombs']
     gs.current_bombs[Team.RED] = turn['red_bombs']
 
+import time
 for turn in replay['turns']:
+    #time.sleep(0.3)
     set_turn(turn)
     gs.render()

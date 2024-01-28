@@ -1,0 +1,25 @@
+Index: bots/bowen_bot.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/bots/bowen_bot.py b/bots/bowen_bot.py
+new file mode 100644
+--- /dev/null	(date 1706398614659)
++++ b/bots/bowen_bot.py	(date 1706398614659)
+@@ -0,0 +1,14 @@
++from src.player import Player
++from src.map import Map
++from src.robot_controller import RobotController
++from src.game_constants import TowerType, Team, Tile, GameConstants, SnipePriority, get_debris_schedule
++from src.debris import Debris
++from src.tower import Tower
++
++
++class BotPlayer(Player):
++    def __init__(self, map: Map):
++        pass
++
++    def play_turn(self, rc: RobotController):
++        return
+\ No newline at end of file
