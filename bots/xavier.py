@@ -8,12 +8,14 @@ BOMBER = TowerType.BOMBER
 REINFORCER = TowerType.REINFORCER
 SOLAR_FARM = TowerType.SOLAR_FARM
 TOWERS = [GUNSHIP, BOMBER, SOLAR_FARM, REINFORCER]
+OFFENSE_SIZE = 20
 
 
 class BotPlayer(Player):
     def __init__(self, mp: Map):
         super().__init__(mp)
         self.map = mp
+        self.launch = 0
 
     @staticmethod
     def in_range(tower, tower_coords, target_coords):
@@ -78,6 +80,7 @@ class BotPlayer(Player):
     def play_turn(self, rc: RobotController):
         self.build_towers(rc)
         self.towers_attack(rc)
+        self.attack(rc)
 
     def build_optimal_tower(self, tower, rc):
         x, y = self.get_optimal(tower, rc)
@@ -113,3 +116,37 @@ class BotPlayer(Player):
                 rc.auto_snipe(tower.id, SnipePriority.FIRST)
             elif tower.type == TowerType.BOMBER:
                 rc.auto_bomb(tower.id)
+
+    def sell_farm(self, rc: RobotController, num=1):
+        towers = rc.get_towers(rc.get_ally_team())
+        for tower in towers:
+            if tower.type == SOLAR_FARM:
+                rc.sell_tower(tower.id)
+                num -= 1
+                if num == 0:
+                    break
+
+    def get_farm_count(self, rc: RobotController):
+        towers = rc.get_towers(rc.get_ally_team())
+        count = 0
+        for tower in towers:
+            if tower.type == SOLAR_FARM:
+                count += 1
+        return count
+
+    def attack(self, rc: RobotController):
+        # num_spaces = self.map.height * self.map.width - len(self.map.path) - len(rc.get_towers(rc.get_ally_team()))
+
+        debris = (7, 1000)
+        farm_count = self.get_farm_count(rc)
+        balance = rc.get_balance(rc.get_ally_team()) + farm_count * SOLAR_FARM.cost * 0.8
+        offense_cost = OFFENSE_SIZE * rc.get_debris_cost(*debris)
+
+        if balance > offense_cost:
+            self.sell_farm(rc, num=farm_count)
+            self.launch = OFFENSE_SIZE
+
+        if self.launch > 0:
+            self.launch -= 1
+            if rc.can_send_debris(*debris):
+                rc.send_debris(*debris)
