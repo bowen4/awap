@@ -10,6 +10,7 @@ GUNSHIP = TowerType.GUNSHIP
 BOMBER = TowerType.BOMBER
 REINFORCER = TowerType.REINFORCER
 SOLAR_FARM = TowerType.SOLAR_FARM
+TOWERS = [GUNSHIP, BOMBER, SOLAR_FARM, REINFORCER]
 
 
 class BotPlayer(Player):
@@ -29,10 +30,12 @@ class BotPlayer(Player):
                 num += 1
         return num
 
-    def get_num_towers_in_range(self, tower, tower_coords, rc):
+    def get_num_towers_in_range(self, tower, tower_coords, rc, towers=None):
+        if towers is None:
+            towers = [GUNSHIP, BOMBER]
         num = 0
         for i in rc.get_towers(rc.get_ally_team()):
-            if i.type in [GUNSHIP, BOMBER] and self.in_range(tower, tower_coords, (i.x, i.y)):
+            if i.type in towers and self.in_range(tower, tower_coords, (i.x, i.y)):
                 num += 1
         return num
 
@@ -57,7 +60,7 @@ class BotPlayer(Player):
                     if not rc.can_build_tower(tower, x, y):
                         continue
                     num = self.get_num_paths_in_range(GUNSHIP, (x, y))
-                    if num <= best_num:
+                    if num < best_num:
                         best_num = num
                         best_coords = (x, y)
 
@@ -83,21 +86,24 @@ class BotPlayer(Player):
         if rc.can_build_tower(tower, x, y):
             rc.build_tower(tower, x, y)
 
-    def build_towers(self, rc: RobotController):
-        if rc.get_turn() == 1:
-            for i in range(2):
-                self.build_optimal_tower(GUNSHIP, rc)
-        else:
-            parity = len(rc.get_towers(rc.get_ally_team())) % 11
+    @staticmethod
+    def get_parity(rc: RobotController, mod):
+        return len(rc.get_towers(rc.get_ally_team())) % mod
 
-            if parity in [0, 2, 5, 8]:
-                self.build_optimal_tower(GUNSHIP, rc)
-            elif parity in [1, 3, 6, 9]:
-                self.build_optimal_tower(BOMBER, rc)
-            elif parity in [4, 7]:
-                self.build_optimal_tower(SOLAR_FARM, rc)
-            elif parity in [10]:
-                self.build_optimal_tower(REINFORCER, rc)
+    def build_towers(self, rc: RobotController):
+        # Early Game
+        if rc.get_turn() < 2000:
+            parity = self.get_parity(rc, 9)
+            order = [1, 0, 2, 1, 0, 2, 1, 0, 3]
+            tower = TOWERS[order[parity]]
+            self.build_optimal_tower(tower, rc)
+
+        # Mid Game
+        else:
+            parity = self.get_parity(rc, 9)
+            order = [0, 0, 2, 0, 0, 2, 0, 0, 3]
+            tower = TOWERS[order[parity]]
+            self.build_optimal_tower(tower, rc)
 
     @staticmethod
     def towers_attack(rc: RobotController):
