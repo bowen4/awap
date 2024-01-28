@@ -52,7 +52,7 @@ class BotPlayer(Player):
                 if i.health != 0:
                     totalHP += i.health
                     k += 1
-            return totalHP / (10*k)
+            return totalHP / k
         else: return 0
 
     def build_towers(self, rc: RobotController):
@@ -67,26 +67,22 @@ class BotPlayer(Player):
         x = random.randint(0, self.map.height-1)
         y = random.randint(0, self.map.height-1)
         val = random.randrange(0, 1) # randomly select a tower
-        if r < f:
-            if val < prob_sniper: tower = 1
-            else: tower = 2
+        if r < f + 50:
+            if val < prob_sniper: tower = 2
+            else: tower = 1
             if (rc.can_build_tower(TowerType.GUNSHIP, x, y) and 
-                rc.can_build_tower(TowerType.BOMBER, x, y) and
-                rc.can_build_tower(TowerType.SOLAR_FARM, x, y) and
-                rc.can_build_tower(TowerType.REINFORCER, x, y)
+                rc.can_build_tower(TowerType.BOMBER, x, y)
             ) and (r < f):
                 if tower == 1:
                     rc.build_tower(TowerType.BOMBER, x, y)
                 elif tower == 2:
                     rc.build_tower(TowerType.GUNSHIP, x, y)
-        elif r >= f:
+        elif r >= f + 50:
             if val < prob_sniper: tower = 3
             else: tower = 4
-            if (rc.can_build_tower(TowerType.GUNSHIP, x, y) and 
-                rc.can_build_tower(TowerType.BOMBER, x, y) and
-                rc.can_build_tower(TowerType.SOLAR_FARM, x, y) and
+            if (rc.can_build_tower(TowerType.SOLAR_FARM, x, y) and
                 rc.can_build_tower(TowerType.REINFORCER, x, y)
-            ) and (r < f):
+            ) and (r >= f):
                 if tower == 3:
                     rc.build_tower(TowerType.SOLAR_FARM, x, y)
                 elif tower == 4:
