@@ -1,10 +1,7 @@
 from src.player import Player
 from src.map import Map
 from src.robot_controller import RobotController
-from src.game_constants import TowerType, Team, Tile, GameConstants, SnipePriority, get_debris_schedule
-from src.debris import Debris
-from src.tower import Tower
-import random
+from src.game_constants import TowerType, SnipePriority
 
 GUNSHIP = TowerType.GUNSHIP
 BOMBER = TowerType.BOMBER
@@ -95,7 +92,7 @@ class BotPlayer(Player):
         # Early Game
         if rc.get_turn() < 2000:
             # order = [1, 0, 2, 1, 0, 2, 1, 0, 2]
-            order = [1, 0, 2, 1, 0, 2]
+            order = [1, 0, 2] * 2 + [3] + [1, 0, 2] * 3
             parity = self.get_parity(rc, len(order))
             tower = TOWERS[order[parity]]
             self.build_optimal_tower(tower, rc)
@@ -103,7 +100,7 @@ class BotPlayer(Player):
         # Mid Game
         else:
             # order = [0, 2]
-            order = [0, 0, 2]
+            order = [0, 2] * 3 + [3] + [0, 2] * 4
             parity = self.get_parity(rc, len(order))
             tower = TOWERS[order[parity]]
             self.build_optimal_tower(tower, rc)
